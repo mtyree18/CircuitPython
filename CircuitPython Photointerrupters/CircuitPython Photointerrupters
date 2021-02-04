@@ -1,0 +1,24 @@
+import board
+import time
+from digitalio import DigitalInOut, Direction, Pull
+
+interrupter = DigitalInOut(board.D7)
+interrupter.direction = Direction.INPUT
+interrupter.pull = Pull.UP
+
+x = 0
+
+while True:
+    start = time.time()
+    finish = start + 4
+    while time.time() < finish:
+        if interrupter.value:
+            x = x + 1
+            while interrupter.value:
+                pass
+    if time.time() == finish:
+        print("Number of interrupts: " + str(x))
+
+    # If interrupted increase x by one
+    # serial print x within a sentence
+    # wait 4 seconds and print again
